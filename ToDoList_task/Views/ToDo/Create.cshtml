@@ -1,0 +1,25 @@
+﻿@using Repositories.Items
+@model ToDo
+@*@model ASP_task4.Models.ToDoList
+@model IEnumerable<ASP_task4.Models.Category>*@
+
+
+<form asp-action="Create" asp-controller="ToDo">
+    <div>
+        <label asp-for="Text">Input task:</label>
+        <input asp-for="Text" name="Text" type="text"><br/><br/>
+
+        <label asp-for="Description">Input description:</label>
+        <textarea asp-for="Description" type="text"></textarea><br/><br/>
+
+        <label asp-for="CategoryId">Choose a category:</label>
+        <select asp-for="CategoryId" id="cars" asp-items="ViewBag.Category">
+            <option></option>
+        </select><br/><br/>
+
+        <label asp-for="Deadline">Choose a deadline:</label>
+        <input asp-for="Deadline" type="datetime-local"><br/>
+
+        <input type="submit" value="Safe"/>
+    </div>
+</form>

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Repositories.Items.ToDo>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<a asp-controller="ToDo" asp-action="Create">Create</a>
+<table class="table">
+    <tr>
+            <th>Text</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Deadline</th>
+            <th>Complete</th>
+            <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Text</td>
+            <td>@item.Description</td>
+            <td>@item.CategoryId</td>
+            <td>@item.Deadline</td>
+            <td> 
+                @(item.IsComplete ? "Complete" : "Not complete")
+            </td>
+            <td>
+                <a asp-controller="ToDo" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-controller="ToDo" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+</table>

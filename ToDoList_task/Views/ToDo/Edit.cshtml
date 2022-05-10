@@ -1,0 +1,26 @@
+﻿@using Repositories.Items
+@model ToDo
+
+
+<form asp-action="Edit" asp-controller="ToDo">
+    <div>
+        <input type="hidden" asp-for="Id" />
+
+        <label asp-for="Text">Input task:</label>
+        <input asp-for="Text" name="Text" type="text"><br/><br/>
+
+        <label asp-for="Description">Input description:</label>
+        <textarea asp-for="Description" type="text"></textarea><br/><br/>
+
+        <label asp-for="CategoryId">Choose a category:</label>
+        <select asp-for="CategoryId" id="cars" asp-items="ViewBag.Category"></select><br/><br/>
+
+        <label asp-for="Deadline">Choose a deadline:</label>
+        <input asp-for="Deadline" type="datetime-local"><br/>
+
+        <label asp-for="IsComplete">Complete ?</label>
+        <input asp-for="IsComplete" type="checkbox" /><br />
+
+        <input type="submit" value="Safe"/>
+    </div>
+</form>
