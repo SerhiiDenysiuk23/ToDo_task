@@ -12,10 +12,11 @@ namespace ToDoList_task.Controllers
         private const string connectionStr = "Data Source=DESKTOP-6NLB2FU;Initial Catalog=sanaTask;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         ICategoryRepository categoryRep;
+        ViewModel model = new ViewModel();
 
         public CategoryController()
         {
-            switch (Flag.value)
+            switch (0)
             {
                 case 0:
                 default:
@@ -29,21 +30,37 @@ namespace ToDoList_task.Controllers
 
         public ActionResult Index()
         {
-            return View(categoryRep.GetList());
+            model.Categories = categoryRep.GetList();
+            return View(model);
         }
 
-        public ActionResult Create()
-        {
-            return View("Index");
-        }
+        //public ActionResult Create()
+        //{
+        //    return View("Index");
+        //}
 
         [HttpPost]
-        public ActionResult Create(Category category)
+        public ActionResult Index(Category category)
         {
-            categoryRep.Create(category);
-            return RedirectToAction("Index");
+            model.Category = category;
+            categoryRep.Create(model.Category);
+            return RedirectToAction();
         }
 
-
+        [HttpGet]
+        [ActionName("Delete")]
+        public ActionResult ConfirmDelete(int id)
+        {
+            Category category = categoryRep.Get(id);
+            if (category != null)
+                return View(category);
+            return NotFound();
+        }
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            categoryRep.Delete(id);
+            return RedirectToAction("Index");
+        }
     }
 }

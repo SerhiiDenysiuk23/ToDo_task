@@ -1,6 +1,7 @@
 ﻿using Repositories.IRepositories;
 using Repositories.Items;
 using System.Xml;
+//using System.Xml.Linq;
 
 namespace Repositories.Repositories
 {
@@ -8,7 +9,7 @@ namespace Repositories.Repositories
     {
         XmlDocument xmlDoc;
         XmlElement? xmlRoot;
-
+        
         public XMLToDoRepository(string path)
         {
             xmlDoc = new XmlDocument();
@@ -18,13 +19,13 @@ namespace Repositories.Repositories
 
         public void Create(ToDo toDo)
         {
-            xmlDoc.CreateElement("Id").InnerText = Convert.ToString(toDo.Id);
-            //xmlDoc.CreateAttribute("Id").Value = Convert.ToString(toDo.Id);
-            //xmlDoc.CreateAttribute("Text").Value = toDo.Text;
-            //xmlDoc.CreateAttribute("Description").Value = toDo.Description;
-            //xmlDoc.CreateAttribute("IsComplete").Value = Convert.ToString(toDo.IsComplete);
-            //xmlDoc.CreateAttribute("Deadline").Value = Convert.ToString(toDo.Deadline);
-            //xmlDoc.CreateAttribute("CategoryId").Value = Convert.ToString(toDo.CategoryId);
+            //xmlDoc.CreateElement("Id").InnerText = Convert.ToString(toDo.Id);
+            xmlDoc.CreateAttribute("Id").Value = Convert.ToString(toDo.Id);
+            xmlDoc.CreateElement("Text").Value = toDo.Text;
+            xmlDoc.CreateElement("Description").Value = toDo.Description;
+            xmlDoc.CreateElement("IsComplete").Value = Convert.ToString(toDo.IsComplete);
+            xmlDoc.CreateElement("Deadline").Value = Convert.ToString(toDo.Deadline);
+            xmlDoc.CreateElement("CategoryId").Value = Convert.ToString(toDo.CategoryId);
         }
 
         public void Delete(int id)

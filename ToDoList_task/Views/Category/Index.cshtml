@@ -1,9 +1,17 @@
-﻿@model IEnumerable<Repositories.Items.Category>
+﻿@model ToDoList_task.Models.ViewModel
 
 <ul>
-    @foreach (var item in Model)
+    @foreach (var item in Model.Categories)
     {
-        <li>item.Name</li>
+        <li>
+                @item.Name
+                <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        </li>
     }
 </ul>
+
+<form asp-action="Index" asp-controller="Category">
+    <label asp-for="Category.Name">Input task:</label>
+    <input asp-for="Category.Name" name="Category.Name" type="text"><br/>
+</form>
 

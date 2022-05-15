@@ -1,8 +1,4 @@
-﻿@using Repositories.Items
-@model ToDo
-@*@model ASP_task4.Models.ToDoList
-@model IEnumerable<ASP_task4.Models.Category>*@
-
+﻿@model Repositories.Items.ToDo
 
 <form asp-action="Create" asp-controller="ToDo">
     <div>
@@ -13,8 +9,12 @@
         <textarea asp-for="Description" type="text"></textarea><br/><br/>
 
         <label asp-for="CategoryId">Choose a category:</label>
-        <select asp-for="CategoryId" id="cars" asp-items="ViewBag.Category">
-            <option></option>
+        <select asp-for="CategoryId">
+            <option value=""></option>
+            @foreach (var item in ViewBag.Categories)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
         </select><br/><br/>
 
         <label asp-for="Deadline">Choose a deadline:</label>

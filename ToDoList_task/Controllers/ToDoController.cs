@@ -11,16 +11,21 @@ namespace ToDoList_task.Controllers
         private const string connectionStr = "Data Source=DESKTOP-6NLB2FU;Initial Catalog=sanaTask;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         IToDoRepository toDoRep;
+        ICategoryRepository categoryRep;
+        ViewModel _model = new ViewModel();
 
         public ToDoController()
         {
-            switch (Flag.value)
+            switch ("SQL")
             {
-                case 0:
+                case "SQL":
                 default:
-                    toDoRep = new SQLToDoListRepository(connectionStr);
+                    {
+                        toDoRep = new SQLToDoListRepository(connectionStr);
+                        categoryRep = new SQLCategoryRepository(connectionStr);
+                    }
                     break;
-                case 1:
+                case "XML":
                     toDoRep = new XMLToDoRepository(@"C:\xmlData\ToDoList.xml");
                     break;
             } 
@@ -30,7 +35,9 @@ namespace ToDoList_task.Controllers
         {
             try
             {
-                return View(toDoRep.GetList());
+                _model.ToDoList = toDoRep.GetList();
+                _model.Categories = categoryRep.GetList();
+                return View(_model);
             }
             catch (Exception ex)
             {
@@ -41,6 +48,7 @@ namespace ToDoList_task.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.Categories = categoryRep.GetList();
             return View();
         }
 
@@ -55,7 +63,10 @@ namespace ToDoList_task.Controllers
         {
             ToDo toDo = toDoRep.Get(id);
             if (toDo != null)
+            {
+                ViewBag.Categories = categoryRep.GetList();
                 return View(toDo);
+            }
             return NotFound();
         }
 

@@ -1,0 +1,11 @@
+﻿@model Repositories.Items.Category
+
+
+<h2>Are you sure you want to delete this?</h2>
+
+<div>Category name: @Model.Name</div>
+
+<form asp-controller="Category" asp-action="Delete" method="post">
+                <input type="submit" value="Delete" />
+</form>
+<a asp-controller="Category" asp-action="Index">Cancel</a>

@@ -1,5 +1,4 @@
-﻿@using Repositories.Items
-@model ToDo
+﻿@model Repositories.Items.ToDo
 
 
 <form asp-action="Edit" asp-controller="ToDo">
@@ -13,14 +12,20 @@
         <textarea asp-for="Description" type="text"></textarea><br/><br/>
 
         <label asp-for="CategoryId">Choose a category:</label>
-        <select asp-for="CategoryId" id="cars" asp-items="ViewBag.Category"></select><br/><br/>
+        <select asp-for="CategoryId">
+            <option value=""></option>
+            @foreach (var item in ViewBag.Categories)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select><br/><br/>
 
         <label asp-for="Deadline">Choose a deadline:</label>
         <input asp-for="Deadline" type="datetime-local"><br/>
 
-        <label asp-for="IsComplete">Complete ?</label>
-        <input asp-for="IsComplete" type="checkbox" /><br />
-
+        <label asp-for="IsComplete">Complete? </label>
+        @*@Html.CheckBox("IsComplete")<br />*@
+        <input asp-for="IsComplete" type="checkbox"/><br />
         <input type="submit" value="Safe"/>
     </div>
 </form>
