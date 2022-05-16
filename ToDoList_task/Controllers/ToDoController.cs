@@ -9,6 +9,8 @@ namespace ToDoList_task.Controllers
     public class ToDoController : Controller
     {
         private const string connectionStr = "Data Source=DESKTOP-6NLB2FU;Initial Catalog=sanaTask;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private const string xmlFilePath = @"C:\xmlData\ToDoList.xml";
+        private const string xmlCategFilePath = @"C:\xmlData\CategoryList.xml";
 
         IToDoRepository toDoRep;
         ICategoryRepository categoryRep;
@@ -26,24 +28,19 @@ namespace ToDoList_task.Controllers
                     }
                     break;
                 case "XML":
-                    toDoRep = new XMLToDoRepository(@"C:\xmlData\ToDoList.xml");
+                    {
+                        toDoRep = new XMLToDoRepository(xmlFilePath);
+                        categoryRep = new XMLCategoryRepository(xmlCategFilePath);
+                    }
                     break;
             } 
         }
 
         public ActionResult Index()
         {
-            try
-            {
                 _model.ToDoList = toDoRep.GetList();
                 _model.Categories = categoryRep.GetList();
                 return View(_model);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return View("Create");
-            }
         }
 
         public ActionResult Create()

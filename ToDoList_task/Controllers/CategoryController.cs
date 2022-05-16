@@ -10,6 +10,7 @@ namespace ToDoList_task.Controllers
     public class CategoryController : Controller
     {
         private const string connectionStr = "Data Source=DESKTOP-6NLB2FU;Initial Catalog=sanaTask;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private const string xmlCategFilePath = @"C:\xmlData\CategoryList.xml";
 
         ICategoryRepository categoryRep;
         ViewModel model = new ViewModel();
@@ -22,9 +23,9 @@ namespace ToDoList_task.Controllers
                 default:
                     categoryRep = new SQLCategoryRepository(connectionStr);
                     break;
-                //case 1:
-                //    categoryRep = new XMLToDoRepository(@"C:\xmlData\ToDoList.xml");
-                //    break;
+                case 1:
+                    categoryRep = new XMLCategoryRepository(xmlCategFilePath);
+                    break;
             }
         }
 

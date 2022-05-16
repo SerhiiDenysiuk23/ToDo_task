@@ -17,7 +17,23 @@
         <tr>
             <td>@item.Text</td>
             <td>@item.Description</td>
-            <td>@(item.CategoryId == null ? "No Category" : Model.Categories[Convert.ToInt32(item.CategoryId) - 1].Name)</td>
+            <td>
+                @if (item.CategoryId == null)
+                {
+                    <span>No Category</span>
+                    ;
+                }
+                else
+                {
+                    foreach(var i in Model.Categories)
+                    {
+                        if(i.Id == item.CategoryId)
+                        {
+                            <span>@i.Name</span>
+                        }
+                    }
+                }
+            </td>
             <td>@item.Deadline</td>
             <td> 
                 @(item.IsComplete ? "Complete" : "Not complete")
