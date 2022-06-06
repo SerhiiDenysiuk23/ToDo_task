@@ -6,11 +6,11 @@ using System.Data;
 
 namespace Repositories.Repositories
 {
-    public class SQLToDoListRepository : IToDoRepository
+    public class SQLToDoRepository : IToDoRepository
     {
         string connectionString;
 
-        public SQLToDoListRepository(string conn)
+        public SQLToDoRepository(string conn)
         {
             connectionString = conn;
         }

@@ -8,32 +8,14 @@ namespace ToDoList_task.Controllers
 {
     public class ToDoController : Controller
     {
-        private const string connectionStr = "Data Source=DESKTOP-6NLB2FU;Initial Catalog=sanaTask;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        private const string xmlFilePath = @"C:\xmlData\ToDoList.xml";
-        private const string xmlCategFilePath = @"C:\xmlData\CategoryList.xml";
-
         IToDoRepository toDoRep;
         ICategoryRepository categoryRep;
         ViewModel _model = new ViewModel();
 
-        public ToDoController()
+        public ToDoController(IToDoRepository toDoRep, ICategoryRepository categoryRep)
         {
-            switch ("SQL")
-            {
-                case "SQL":
-                default:
-                    {
-                        toDoRep = new SQLToDoListRepository(connectionStr);
-                        categoryRep = new SQLCategoryRepository(connectionStr);
-                    }
-                    break;
-                case "XML":
-                    {
-                        toDoRep = new XMLToDoRepository(xmlFilePath);
-                        categoryRep = new XMLCategoryRepository(xmlCategFilePath);
-                    }
-                    break;
-            } 
+            this.toDoRep = toDoRep;
+            this.categoryRep = categoryRep;
         }
 
         public ActionResult Index()
@@ -87,6 +69,13 @@ namespace ToDoList_task.Controllers
         public ActionResult Delete(int id)
         {
             toDoRep.Delete(id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult ChangeFlag(int changeFlag)
+        {
+            FlagValue.CurrValue = changeFlag;
             return RedirectToAction("Index");
         }
 

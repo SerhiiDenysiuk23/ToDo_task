@@ -9,24 +9,12 @@ namespace ToDoList_task.Controllers
 {
     public class CategoryController : Controller
     {
-        private const string connectionStr = "Data Source=DESKTOP-6NLB2FU;Initial Catalog=sanaTask;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        private const string xmlCategFilePath = @"C:\xmlData\CategoryList.xml";
-
         ICategoryRepository categoryRep;
         ViewModel model = new ViewModel();
 
-        public CategoryController()
+        public CategoryController(ICategoryRepository repo)
         {
-            switch (0)
-            {
-                case 0:
-                default:
-                    categoryRep = new SQLCategoryRepository(connectionStr);
-                    break;
-                case 1:
-                    categoryRep = new XMLCategoryRepository(xmlCategFilePath);
-                    break;
-            }
+            categoryRep = repo;
         }
 
         public ActionResult Index()
@@ -34,11 +22,6 @@ namespace ToDoList_task.Controllers
             model.Categories = categoryRep.GetList();
             return View(model);
         }
-
-        //public ActionResult Create()
-        //{
-        //    return View("Index");
-        //}
 
         [HttpPost]
         public ActionResult Index(Category category)

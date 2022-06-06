@@ -1,4 +1,6 @@
 ﻿@using ToDoList_task.Models
+@model ViewModel;
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,12 +21,15 @@
                 <li class="nav-item"><a class="nav-link active" asp-action="Index" asp-controller="ToDo">To Do List</a></li>
                 <li class="nav-item"><a class="nav-link active" asp-action="Index" asp-controller="Category">Categories</a></li>
                 <li class="nav-item"> 
-                    <form class="d-inline-flex" asp-controller="ToDo">
-                        <select class="form-select">
-                            <option value="0">SQL</option>
-                            <option value="1">XML</option>
+                    <form method="get" asp-action="ChangeFlag" asp-controller="ToDo" class="d-inline-flex">
+                        <select name="changeFlag">@*
+                            @for (int i = 0; i < FlagValue.Values.Length; i++){
+                                <option selected="@(FlagValue.CurrValue == i)" value="@i">@FlagValue.Values[i]</option>
+                            }*@
+                            <option selected="@(FlagValue.CurrValue == 0)" value="0">@FlagValue.Values[0]</option>
+                            <option selected="@(FlagValue.CurrValue == 1)" value="1">@FlagValue.Values[1]</option>
                         </select>
-                        <input class="" type="submit" value="Change"/>
+                        <input type="submit" value="Change"/>
                     </form>
                 </li>
             </ul>

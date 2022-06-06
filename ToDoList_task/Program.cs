@@ -1,7 +1,54 @@
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
+using ToDoList_task.GraphQL.GraphQLSchema;
+using Repositories.IRepositories;
+using Repositories.Repositories;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using Microsoft.Extensions.Configuration;
+using ToDoList_task.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+string conn = builder.Configuration.GetConnectionString("ConnectionString");
+string xmlCateg = builder.Configuration.GetConnectionString("XMLCateg");
+string xmlToDo = builder.Configuration.GetConnectionString("XMLToDo");
+
+builder.Services.AddTransient<IToDoRepository>(provider => {
+    switch (FlagValue.Values[FlagValue.CurrValue])
+    {
+        case "SQL":
+        default:
+           return new SQLToDoRepository(conn);
+        case "XML":
+            return new XMLToDoRepository(xmlToDo);
+    }
+});
+builder.Services.AddTransient<ICategoryRepository>(provider => {
+    switch (FlagValue.Values[FlagValue.CurrValue])
+    {
+        case "SQL":
+        default:
+            return new SQLCategoryRepository(conn);
+        case "XML":
+            return new XMLCategoryRepository(xmlCateg);
+            builder.Services.AddTransient<ICategoryRepository, XMLCategoryRepository>(provider => new XMLCategoryRepository(xmlCateg));
+    }
+});
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+builder.Services.AddScoped<IToDoRepository, SQLToDoRepository>();
+builder.Services.AddScoped<ICategoryRepository, SQLCategoryRepository>();
+builder.Services.AddScoped<AppSchema>();
+//builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+builder.Services.AddGraphQL()
+        .AddSystemTextJson()
+        .AddGraphTypes(typeof(AppSchema), ServiceLifetime.Scoped);
+
 
 var app = builder.Build();
 
@@ -19,6 +66,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+//app.UseGraphQL<AppSchema>();
+////app.UseGraphQLAltair(new AltairOptions { GraphQLEndPoint = "/"});
+//app.UseGraphQLPlayground(options: new PlaygroundOptions());
 
 app.MapControllerRoute(
     name: "default",
