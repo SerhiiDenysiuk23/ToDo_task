@@ -7,12 +7,12 @@ namespace ToDoList_task.GraphQL.GraphQLTypes
     {
         public ToDoType()
         {
-            Field(x => x.Id, type: typeof(IdGraphType)).Description("Id property from the ToDo object.");
-            Field(x => x.Text).Description("Text property from the ToDo object.");
-            Field(x => x.Description).Description("Description property from the ToDo object.");
-            Field(x => x.Deadline).Description("Deadline property from the ToDo object.");
-            Field(x => x.IsComplete).Description("IsComplete property from the ToDo object.");
-            Field(x => x.CategoryId).Description("CategoryId property from the ToDo object.");
+            Field(x => x.Id, type: typeof(IdGraphType));
+            Field(x => x.Text);
+            Field(x => x.Description, nullable: true);
+            Field(x => x.Deadline, nullable: true);
+            Field(x => x.IsComplete);
+            Field(x => x.CategoryId, nullable: true);
         }
     }
 }

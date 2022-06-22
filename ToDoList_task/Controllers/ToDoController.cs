@@ -38,6 +38,7 @@ namespace ToDoList_task.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             ToDo toDo = toDoRep.Get(id);

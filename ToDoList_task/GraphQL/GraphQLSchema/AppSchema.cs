@@ -7,7 +7,8 @@ namespace ToDoList_task.GraphQL.GraphQLSchema
     {
         public AppSchema(IServiceProvider provider) : base(provider)
         {
-            Query = provider.GetRequiredService<ToDoQuery>();
+            Query = provider.GetRequiredService<AppQuery>();
+            Mutation = provider.GetRequiredService<AppMutation>();
         }
     }
 }

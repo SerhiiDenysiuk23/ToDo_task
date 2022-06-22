@@ -38,17 +38,14 @@ builder.Services.AddTransient<ICategoryRepository>(provider => {
 });
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddControllers()
-    .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-builder.Services.AddScoped<IToDoRepository, SQLToDoRepository>();
-builder.Services.AddScoped<ICategoryRepository, SQLCategoryRepository>();
 builder.Services.AddScoped<AppSchema>();
-//builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddGraphQL()
         .AddSystemTextJson()
         .AddGraphTypes(typeof(AppSchema), ServiceLifetime.Scoped);
 
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 var app = builder.Build();
 
@@ -67,9 +64,8 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-//app.UseGraphQL<AppSchema>();
-////app.UseGraphQLAltair(new AltairOptions { GraphQLEndPoint = "/"});
-//app.UseGraphQLPlayground(options: new PlaygroundOptions());
+app.UseGraphQL<AppSchema>();
+app.UseGraphQLPlayground(options: new PlaygroundOptions());
 
 app.MapControllerRoute(
     name: "default",
