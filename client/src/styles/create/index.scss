@@ -1,0 +1,14 @@
+header{
+  .create{
+    margin: auto;
+    width: max-content;
+    padding-top: 100px;
+    display: flex;
+    *{
+      margin: 10px;
+    }
+    textarea{
+      resize: none;
+    }
+  }
+}

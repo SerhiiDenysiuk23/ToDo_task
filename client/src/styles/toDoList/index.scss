@@ -1,0 +1,55 @@
+.list{
+  width: 100%;
+  background: #f1ebeb;
+  min-height: 100px;
+  padding: 30px 0;
+  table{
+    width: 70%;
+    margin: auto;
+    text-align: center;
+    background: #faf7f7;
+    //.completeLine{
+    //  text-decoration: line-through black;
+    //  color: #6d6d6d;
+    //}
+
+    tr{
+      td,th{
+        border-bottom: 1px solid #a7a7a7;
+        &:not(:first-child){
+          border-left: 1px solid black;
+        }
+        &:last-child{
+          display: flex;
+          justify-content: center;
+          min-height: 25px;
+        }
+      }
+    }
+  }
+
+  button{
+    margin: 0 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .editToDo{
+    color: blue;
+    font-size: 20px;
+    line-height: 20px;
+    &:active{
+      color: #000090;
+    }
+  }
+
+  .deleteToDo{
+    color: red;
+    font-size: 30px;
+    line-height: 20px;
+    &:active{
+      color: #a50000;
+    }
+  }
+}
