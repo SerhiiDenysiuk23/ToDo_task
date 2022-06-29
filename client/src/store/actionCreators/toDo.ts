@@ -1,7 +1,7 @@
 import {Dispatch} from "redux";
 import {ActionTypes, ToDoAction} from "../../types/toDo";
 import getResource from "../../api/core";
-import {getToDoList} from "../../api/queries";
+import {deleteToDo, getToDoList} from "../../api/queries";
 
 
 export const fetchToDos = () => {

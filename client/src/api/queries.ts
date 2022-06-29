@@ -29,7 +29,7 @@ export const createToDo = (toDo: ToDo) => {
     })
 }
 
-export const deleteToDo = (id: number) => {
+export const deleteToDo = (id: number | string) => {
     return JSON.stringify({
         query: `mutation DeleteToDo($toDoId: ID!) {
               deleteToDo(toDoId: $toDoId)
@@ -65,22 +65,22 @@ export const getCategoryList = () => {
     })
 }
 
-export const createCategory = (category: Category) => {
+export const createCategory = (name: string) => {
     return JSON.stringify({
         query: `mutation CreateCategory($category: categoryInput!) {
           createCategory(category: $category) {
             name
           }
         }`,
-        variables: {category}
+        variables: {"category":{name}}
     })
 }
 
-export const deleteCategory = async (category: Category) => {
+export const deleteCategory = (categoryId: string|number) => {
     return JSON.stringify({
         query: `mutation DeleteCategory($categoryId: ID!) {
           deleteCategory(categoryId: $categoryId)
         }`,
-        variables: {category}
+        variables: {categoryId}
     })
 }

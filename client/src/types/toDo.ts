@@ -1,10 +1,10 @@
 export interface ToDo{
-    id?: number,
+    id?: number | string,
     text: string,
     description?: string,
     deadline?: string,
-    isComplete?: boolean,
-    categoryId?: number
+    isComplete: boolean,
+    categoryId?: number | string
 }
 
 export enum ActionTypes{

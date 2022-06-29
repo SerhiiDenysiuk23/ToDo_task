@@ -3,7 +3,7 @@ import getResource from "./api/core";
 import {getCategoryList, getToDoList} from "./api/queries";
 // import CreateToDo from "./components/CreateToDo";
 import ToDoList from "./components/ToDoList"
-import CategoryList from "./components/CategoryList";
+import CategorySection from "./components/CategorySection";
 import CreateToDo from "./components/CreateToDo";
 
 
@@ -15,7 +15,7 @@ function App() {
               <CreateToDo/>
             </header>
             <ToDoList/>
-            <CategoryList/>
+            <CategorySection/>
         </div>
     );
 }

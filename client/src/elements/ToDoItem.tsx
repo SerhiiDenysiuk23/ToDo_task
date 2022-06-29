@@ -1,29 +1,60 @@
-import React from "react";
+import React, {useState} from "react";
 import {ToDo} from "../types/toDo";
+import ToDoItemBodyDefault from "./ToDoItemBodyDefault";
+import ToDoItemBodyEdit from "./ToDoItemBodyEdit";
+import ToDoItemBodyDelete from "./ToDoItemBodyDelete";
 
-interface Prop{
+interface Prop {
     toDo: ToDo
 }
 
-const ToDoItem = (props: Prop) => {
-    const idStr = props.toDo.id != undefined ? props.toDo.id.toString() : ""
-    return (
-        <tr>
-            <td>{props.toDo.text}</td>
-            <td>{props.toDo.description}</td>
-            <td>{props.toDo.categoryId === null ? "No Category" : props.toDo.categoryId}</td>
-            <td>{props.toDo.deadline === null ? "No Deadline" : props.toDo.deadline}</td>
-            <td>
-                {props.toDo.isComplete ? "Complete" : "Not complete"}
-            </td>
-            <td>
-                {/*<a asp-controller="ToDo" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*/}
-                <button className="editToDo" name={idStr}>✎</button>
-                <button className="deleteToDo" name={idStr} >×</button>
-                {/*<a asp-controller="ToDo" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*/}
-            </td>
-        </tr>
-    )
+enum eventVariant {
+    DEFAULT = "DEFAULT",
+    EDIT = "EDIT",
+    DELETE = "DELETE"
+}
+
+interface IToDoItemState {
+    eventVar: string,
+    toDo: ToDo
+}
+
+const ToDoItem = ({toDo}: Prop) => {
+    const [state, setState] = useState<IToDoItemState>({eventVar: eventVariant.DEFAULT, toDo: toDo})
+
+    switch (state.eventVar) {
+        case eventVariant.DEFAULT:
+        default:
+            return (
+                <tr>
+                    <ToDoItemBodyDefault toDo={toDo}/>
+                    <td>
+                        <button
+                            className="editToDo"
+                            onClick={() => setState({...state, eventVar: eventVariant.EDIT})}
+                        >✎
+                        </button>
+                        <button
+                            className="deleteToDo"
+                            onClick={() => setState({...state, eventVar: eventVariant.DELETE})}>×
+                        </button>
+                    </td>
+                </tr>
+            )
+        case eventVariant.EDIT:
+            return (
+                <tr>
+                    <ToDoItemBodyEdit toDo={toDo}/>
+                </tr>
+            )
+        case eventVariant.DELETE:
+            return (
+                <tr>
+                    <ToDoItemBodyDelete id={toDo.id}/>
+                </tr>
+            )
+    }
+
 }
 
 export default ToDoItem

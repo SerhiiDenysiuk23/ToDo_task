@@ -23,9 +23,9 @@ namespace Repositories.Repositories
         public void Create(Category category)
         {
             XDocument doc = XDocument.Load(filePath);
-            XElement CategoryList = doc.Element("CategoryList");
+            XElement CategorySection = doc.Element("CategorySection");
 
-            CategoryList.Add(new XElement("Category",
+            CategorySection.Add(new XElement("Category",
                     new XAttribute("Id", DateTime.Now.Ticks % 1000000000),
                     new XElement("Text", category.Name)
                 ));
@@ -35,8 +35,8 @@ namespace Repositories.Repositories
         public void Delete(int id)
         {
             XDocument doc = XDocument.Load(filePath);
-            XElement CategoryList = doc.Element("CategoryList");
-            var category = CategoryList.Elements("Category").FirstOrDefault(t => t.Attribute("Id").Value == id.ToString());
+            XElement CategorySection = doc.Element("CategorySection");
+            var category = CategorySection.Elements("Category").FirstOrDefault(t => t.Attribute("Id").Value == id.ToString());
             category.Remove();
             doc.Save(filePath);
         }
@@ -44,8 +44,8 @@ namespace Repositories.Repositories
         public Category Get(int id)
         {
             XDocument doc = XDocument.Load(filePath);
-            XElement CategoryList = doc.Element("CategoryList");
-            foreach (var item in CategoryList.Elements("Category"))
+            XElement CategorySection = doc.Element("CategorySection");
+            foreach (var item in CategorySection.Elements("Category"))
                 if (item.Attribute("Id").Value == id.ToString())
                 {
                     Category itemCategory = new Category();
@@ -62,11 +62,11 @@ namespace Repositories.Repositories
             XDocument doc = XDocument.Load(filePath);
             var list = new List<Category>();
 
-            XElement CategoryList = doc.Element("CategoryList");
-            if (CategoryList == null)
+            XElement CategorySection = doc.Element("CategorySection");
+            if (CategorySection == null)
                 return null;
 
-            foreach (XElement item in CategoryList.Elements("Category"))
+            foreach (XElement item in CategorySection.Elements("Category"))
             {
                 Category newCategory = new Category();
                 newCategory.Id = Convert.ToInt32(item.Attribute("Id").Value);
@@ -79,7 +79,7 @@ namespace Repositories.Repositories
         public void Update(Category category)
         {
             XDocument doc = XDocument.Load(filePath);
-            var updatedCategory = doc.Element("CategoryList").Elements("Category").FirstOrDefault(t => t.Attribute("Id").Value == category.Id.ToString());
+            var updatedCategory = doc.Element("CategorySection").Elements("Category").FirstOrDefault(t => t.Attribute("Id").Value == category.Id.ToString());
 
             updatedCategory.Element("Name").Value = category.Name.ToString();
 
