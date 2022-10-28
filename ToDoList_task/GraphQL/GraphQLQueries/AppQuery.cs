@@ -28,6 +28,23 @@ namespace ToDoList_task.GraphQL.GraphQLQueries
                 resolve: context => categRep.GetList()
             );
 
+            Field<CategoryType>(
+                "category",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "categoryId" }),
+                resolve: context => {
+                    int categId = Convert.ToInt32(context.Arguments["categoryId"]);
+                    var category = categRep.Get(categId);
+                    if (category == null)
+                    {
+                        context.Errors.Add(new ExecutionError("Couldn't find Category in db."));
+                        return null;
+
+                    }
+                    return category;
+                    
+                }
+            );
+
         }
     }
 }

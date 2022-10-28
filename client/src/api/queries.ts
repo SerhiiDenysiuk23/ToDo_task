@@ -1,4 +1,3 @@
-import {Category} from "../types/category";
 import {ToDo} from "../types/toDo";
 
 export const getToDoList = () => JSON.stringify({
@@ -65,6 +64,18 @@ export const getCategoryList = () => {
     })
 }
 
+export const getCategoryItem = (categoryId: number | string) => {
+    return JSON.stringify({
+        query: `query CategoryItem($categoryId: ID!){
+          category(categoryId: $categoryId){
+            id
+            name
+          }
+        }`,
+        variables: {categoryId}
+    })
+}
+
 export const createCategory = (name: string) => {
     return JSON.stringify({
         query: `mutation CreateCategory($category: categoryInput!) {
@@ -72,11 +83,11 @@ export const createCategory = (name: string) => {
             name
           }
         }`,
-        variables: {"category":{name}}
+        variables: {"category": {name}}
     })
 }
 
-export const deleteCategory = (categoryId: string|number) => {
+export const deleteCategory = (categoryId: string | number) => {
     return JSON.stringify({
         query: `mutation DeleteCategory($categoryId: ID!) {
           deleteCategory(categoryId: $categoryId)

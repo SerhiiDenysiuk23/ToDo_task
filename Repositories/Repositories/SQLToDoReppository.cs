@@ -52,7 +52,7 @@ namespace Repositories.Repositories
 
         public void Update(ToDo toDo)
         {
-            string isComplete = toDo.IsComplete.ToString();
+            string isComplete = toDo.IsComplete ? "1" : "0";
             using (IDbConnection db = new SqlConnection(connectionString))
             {
                 var sqlQuery = "UPDATE Tasks SET Text = @Text, Description = @Description, Deadline = @Deadline, Complete = @IsComplete, CategoryId = @CategoryId WHERE Id = @Id";

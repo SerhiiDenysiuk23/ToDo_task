@@ -7,7 +7,7 @@ namespace ToDoList_task.GraphQL.GraphQLTypes
         public CategoryInputType()
         {
             Name = "categoryInput";
-            //Field<NonNullGraphType<IdGraphType>>("id");
+            Field<IdGraphType>("id");
             Field<NonNullGraphType<StringGraphType>>("name");
         }
     }

@@ -1,5 +1,4 @@
 import * as React from "react";
-import "../styles/create/index.scss"
 import {useEffect, useState} from "react";
 import {ToDo} from "../types/toDo";
 import getResource from "../api/core";
@@ -28,7 +27,7 @@ const CreateToDo = () => {
             })}>
                 <option value=""/>
                 {stateCategory.categoryList.map((item: Category) =>
-                    <option value={item.id}>{item.name}</option>
+                    <option key={item.id} value={item.id}>{item.name}</option>
                 )}
             </select>
 

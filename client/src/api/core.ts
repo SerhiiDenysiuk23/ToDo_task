@@ -15,7 +15,6 @@ const getResource = async (data: string) => {
             },
             data : data
         })
-        console.log(data)
         return response.data
     } catch (error) {
         console.log(error);

@@ -1,18 +1,27 @@
 import React, {useEffect} from "react";
-import "../styles/toDoList/index.scss"
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {useAction} from "../hooks/useAction";
 import {ToDo} from "../types/toDo";
 import ToDoItem from "../elements/ToDoItem";
 
 const ToDoList = () => {
-    const state = useTypedSelector(state => state.toDo)
+    const state = useTypedSelector(state => { return {todo: state.toDo, category: state.category}})
     const {fetchToDos} = useAction()
     useEffect(() => {
         fetchToDos()
     }, [])
 
-    // console.log(state)
+    const {fetchCategories} = useAction()
+    useEffect(() => {
+        fetchCategories()
+    }, [])
+
+    const getCateg = (id: number | string | undefined) =>{
+        console.log(id)
+        const categ = state.category.categoryList.find(elem => elem.id == id)
+        console.log(state)
+        return categ != undefined ? categ : null
+    }
 
     return (
         <section className="list">
@@ -24,9 +33,16 @@ const ToDoList = () => {
                     <th>Category</th>
                     <th>Deadline</th>
                     <th>Complete</th>
-                    <th></th>
+                    <th/>
                 </tr>
-                {state.toDoList.map((item: ToDo) => <ToDoItem toDo={item}/>)}
+                {state.todo.toDoList.map(
+                    (item: ToDo) =>
+                    <ToDoItem
+                        key={item.id}
+                        toDo={item}
+                        category={getCateg(item.categoryId)}/>
+                    )
+                }
                 </tbody>
             </table>
         </section>

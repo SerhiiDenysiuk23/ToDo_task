@@ -3,9 +3,11 @@ import {ToDo} from "../types/toDo";
 import ToDoItemBodyDefault from "./ToDoItemBodyDefault";
 import ToDoItemBodyEdit from "./ToDoItemBodyEdit";
 import ToDoItemBodyDelete from "./ToDoItemBodyDelete";
+import {Category} from "../types/category";
 
 interface Prop {
-    toDo: ToDo
+    toDo: ToDo,
+    category: Category | null
 }
 
 enum eventVariant {
@@ -19,7 +21,7 @@ interface IToDoItemState {
     toDo: ToDo
 }
 
-const ToDoItem = ({toDo}: Prop) => {
+const ToDoItem = ({toDo, category}: Prop) => {
     const [state, setState] = useState<IToDoItemState>({eventVar: eventVariant.DEFAULT, toDo: toDo})
 
     switch (state.eventVar) {
@@ -27,7 +29,7 @@ const ToDoItem = ({toDo}: Prop) => {
         default:
             return (
                 <tr>
-                    <ToDoItemBodyDefault toDo={toDo}/>
+                    <ToDoItemBodyDefault toDo={toDo} category={category}/>
                     <td>
                         <button
                             className="editToDo"
@@ -54,7 +56,6 @@ const ToDoItem = ({toDo}: Prop) => {
                 </tr>
             )
     }
-
 }
 
 export default ToDoItem

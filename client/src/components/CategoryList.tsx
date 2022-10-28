@@ -1,36 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {useAction} from "../hooks/useAction";
 import {Category} from "../types/category";
 import getResource from "../api/core";
-import {createCategory, deleteCategory} from "../api/queries";
+import {deleteCategory} from "../api/queries";
 
-const CategorySection = () => {
+const CategoryList = () => {
     const state = useTypedSelector(state => state.category)
     const {fetchCategories} = useAction()
     useEffect(() => {
         fetchCategories()
     }, [])
 
-    const [stateCategory, setStateCategory] = useState<string>("")
-
     return(
     <>
-        <header>
-            <div className="create">
-                <input onChange={event => setStateCategory(event.target.value)} type="text"
-                       placeholder="Name"/>
-                <button onClick={() => {
-                    getResource(createCategory(stateCategory));
-                    window.location.reload();
-                }}>Create
-                </button>
-            </div>
-        </header>
         <section className="list">
             <table>
                 <tbody>
-                {state.categoryList.map((item: Category) => <tr>
+                {state.categoryList.map((item: Category) => <tr key={item.id}>
                         <td>{item.name}</td>
                         <td>
                             <button className="deleteToDo" onClick={() => {
@@ -49,4 +36,4 @@ const CategorySection = () => {
     </>)
 }
 
-export default CategorySection
+export default CategoryList
